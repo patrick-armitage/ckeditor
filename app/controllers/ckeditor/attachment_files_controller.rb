@@ -1,4 +1,6 @@
 class Ckeditor::AttachmentFilesController < Ckeditor::ApplicationController
+  before_filter :ensure_proper_protocol, :except=>[:new, :create]
+  skip_before_filter :verify_authenticity_token
 
   def index
     @attachments = Ckeditor.attachment_file_adapter.find_all(ckeditor_attachment_files_scope)
